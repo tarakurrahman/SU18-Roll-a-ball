@@ -1,15 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerController : MonoBehaviour {
 
 	public float speed;
+	public Text countText;
+	public Text winText;
+
 	private Rigidbody rb;
+	private int count;
 
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
-
+		count = 0;
+		SetToCount ();
+		winText.text = "";
 	}
 	void FixedUpdate () {
 		float moveHorizontal = Input.GetAxis ("Horizontal");
@@ -23,6 +30,14 @@ public class playerController : MonoBehaviour {
 		if (other.gameObject.CompareTag("Pick Up"));
 		{
 			other.gameObject.SetActive (false);
+			count = count + 1;
+			SetToCount ();
+		}
+	}
+	void SetToCount () {
+		countText.text = "Count: " + count.ToString ();
+		if (count >= 8) {
+			winText.text = "You Win!";
 		}
 	}
 }
